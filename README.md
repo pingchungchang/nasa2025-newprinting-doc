@@ -186,7 +186,7 @@ server {
 ## Documentation Index
 
 - [01 System Design](/docs/01-architecture.md)
-- [02 Dependencies & Hardware](/docs/dependency-hardware.md) # 只有 new printing
+- [02 Dependencies & Hardware](/docs/02-dependency-hardware.md) # 只有 new printing
 - [03 Setup](/docs/02-setup.md)
 - [04 APIs & Database Schema](/docs/03-api-and-db.md)
 - [05 Integration Guide](/docs/04-migration.md)
