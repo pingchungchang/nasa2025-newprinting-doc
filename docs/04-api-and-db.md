@@ -14,7 +14,7 @@
 
 **Request body:**
 ```json
-{ "username": "b14902003", "password": "pw123" }
+{ "username": "b14902XXX", "password": "pw123" }
 ```
 
 **Response body `200_OK`:** （登入成功）
@@ -35,7 +35,7 @@
 
 **Response body `200_OK`:** （有登入）
 ```json
-{ "username": "b14902003", "balance": "437" }
+{ "username": "b14902XXX", "balance": "437" }
 ```
 
 **Response body `HTTP_401_UNAUTHORIZED`:** （沒登入）
@@ -90,8 +90,55 @@ class PdfUploadSerializer(serializers.Serializer[PdfUploadData]):
 { "message": "File system error: `error message`" }
 ```
 
-> todo: `GET /jobs/`
-> todo: `GET /jobs/<str:jobId>/`
+### `GET /jobs/`
+
+查看當前使用者送出的所有工作與狀態，要求 session cookie 。
+
+**Response body `202_ACCEPTED`:** （有登入）
+```json
+{
+    "jobs": {
+        { "jobId": "9", "status": "refunded" },
+        { "jobId": "10", "status": "pending" }
+    }
+}
+```
+
+**Response body `401_UNAUTHORIZED`:** （沒登入）
+```json
+{ "message": "Not logged in" }
+```
+
+### `GET /jobs/<str:jobId>/`
+
+查看目前登入使用者送出的某個特定工作，要求 session cookie 。
+
+**Response body `200_OK`:** （查看成功）
+```json
+{
+    "username": "b14902XXX",
+    "pages": "5",
+    "money": "5",
+    "create_time": "2026-XX-XX XX:XX:XX.XXXXXX",
+    "status": "pending"
+}
+```
+
+**Response body `400_BAD_REQUEST`:** （`jobId` 不是整數）
+```json
+{ "message": "Invalid jobId" }
+```
+
+**Response body `401_UNAUTHORIZED`:** （沒登入）
+```json
+{ "message": "Not logged in" }
+```
+
+**Response body `404_NOT_FOUND`:** （工作編號不存在或是工作編號非當前使用者所持有且當前使用者非管理員）
+```json
+{ "message": "Not Found" }
+```
+
 > todo: `GET /admin/me`
 > todo: `GET /admin/jobs`
 > todo: `GET /admin/jobs/<str:jobId>/`
